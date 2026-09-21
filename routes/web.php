@@ -62,9 +62,11 @@ Route::middleware(['auth'])->group(function () {
         ->name('consultations.respond');
 
 
-    // Form input berita
+    // Form input & edit berita
     Route::get('/dashboard/news/create', [NewsController::class, 'create'])->middleware('admin')->name('news.create');
     Route::post('/dashboard/news', [NewsController::class, 'store'])->middleware('admin')->name('news.store');
+    Route::get('/dashboard/news/{id}/edit', [NewsController::class, 'edit'])->middleware('admin')->name('news.edit');
+    Route::put('/dashboard/news/{id}', [NewsController::class, 'update'])->middleware('admin')->name('news.update');
 
     // Hapus berita
     Route::delete('/dashboard/news/{id}', [NewsController::class, 'destroy'])->middleware('admin')->name('news.destroy');

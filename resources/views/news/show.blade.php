@@ -99,10 +99,10 @@
                                 <div class="flex justify-between items-start mb-2">
                                     <div class="flex items-center gap-2">
                                         <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-600 font-bold text-xs">
-                                            {{ strtoupper(substr($comment->user->name, 0, 1)) }}
+                                            {{ strtoupper(substr($comment->user?->name ?? 'A', 0, 1)) }}
                                         </div>
                                         <div>
-                                            <div class="text-sm font-bold text-gray-900">{{ $comment->user->name }}</div>
+                                            <div class="text-sm font-bold text-gray-900">{{ $comment->user?->name ?? 'Anonim' }}</div>
                                             <div class="text-[10px] text-gray-400">{{ $comment->created_at->diffForHumans() }}</div>
                                         </div>
                                     </div>

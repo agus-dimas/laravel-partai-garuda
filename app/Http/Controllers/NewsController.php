@@ -37,6 +37,38 @@ class NewsController extends Controller
         return redirect()->route('dashboard')->with('success', 'Berita berhasil ditambahkan!');
     }
 
+    public function edit($id)
+    {
+        $news = News::findOrFail($id);
+        return view('dashboard.news.edit', compact('news'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $news = News::findOrFail($id);
+
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'image' => 'nullable|image',
+            'category' => 'required|string|max:255',
+        ]);
+
+        if ($request->hasFile('image')) {
+            if ($news->image) {
+                \Storage::disk('public')->delete($news->image);
+            }
+            $news->image = $request->file('image')->store('news', 'public');
+        }
+
+        $news->title = $request->title;
+        $news->content = $request->content;
+        $news->category = $request->category;
+        $news->save();
+
+        return redirect()->route('dashboard')->with('success', 'Berita berhasil diperbarui!');
+    }
+
     public function index()
     {
         // Ambil semua berita terbaru

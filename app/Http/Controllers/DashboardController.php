@@ -13,11 +13,11 @@ class DashboardController extends Controller
         $isAdmin = in_array($user->role, ['admin', 'super_admin'], true);
 
         if ($isAdmin) {
-            $news = News::latest()->paginate(3);
+            $news = News::with('user')->latest()->paginate(3);
             $consultationCount = Consultation::where('is_read', false)->count();
             $consultations = collect();
         } else {
-            $news = News::where('user_id', $user->id)->latest()->paginate(3);
+            $news = News::with('user')->where('user_id', $user->id)->latest()->paginate(3);
             $consultationCount = Consultation::where('user_id', $user->id)->count();
             $consultations = Consultation::where('user_id', $user->id)->latest()->paginate(5);
         }

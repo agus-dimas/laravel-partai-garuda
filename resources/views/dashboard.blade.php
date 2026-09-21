@@ -59,11 +59,15 @@
                                                 class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">{{ $item->category ?? 'Umum' }}</span>
                                         </div>
                                         <p class="text-sm text-zinc-600 mt-2">{{ Str::limit($item->content, 120) }}</p>
-                                        <p class="text-xs text-zinc-400 mt-2">Oleh: {{ $item->user->name }}</p>
+                                        <p class="text-xs text-zinc-400 mt-2">Oleh: {{ $item->user?->name ?? 'Anonim' }}</p>
                                     </div>
                                     <div class="flex flex-wrap items-center gap-3">
                                         <a href="{{ route('news.show', $item->id) }}"
                                             class="text-sm font-semibold text-red-600 hover:text-red-700">Baca selengkapnya</a>
+                                        <a href="{{ route('news.edit', $item->id) }}"
+                                            class="rounded-lg border border-zinc-200 px-3 py-1 text-xs font-semibold text-zinc-700 hover:bg-zinc-50">
+                                            Edit
+                                        </a>
                                         <form action="{{ route('news.destroy', $item->id) }}" method="POST"
                                             onsubmit="return confirm('Apakah yakin ingin dihapus?');">
                                             @csrf
