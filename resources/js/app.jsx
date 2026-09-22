@@ -57,7 +57,7 @@ const TiltCard = ({ title, description, image, link, author }) => {
     );
 };
 
-// Komponen App utama
+// Komponen App utama untuk menu HOME
 const App = () => {
     const [cards, setCards] = useState([]);
     const [page, setPage] = useState(1);
@@ -90,8 +90,8 @@ const App = () => {
         <div className="min-h-screen flex flex-col bg-gray-100">
 
 
-            {/* Main content */}
-            < main className="flex-grow mt-10 mb-4 w-full pt-6 px-8 pb-8 pt-4" >
+            {/* Main content untuk menu HOME */}
+            <main className="flex-grow mt-10 mb-4 w-full px-8 pb-8 pt-6" >
                 <section className="relative w-screen left-1/2 right-1/2 -mx-[50vw] overflow-hidden mb-8">
                     <img
                         src="/images/banner home.jpg"
@@ -177,7 +177,7 @@ const App = () => {
                                     </p>
                                     <div className="mt-10 px-auto">
                                         <a
-                                            href="/"
+                                            href="https://app.partaigaruda.org/"
                                             className="relative inline-flex items-center justify-center overflow-hidden rounded-lg px-3 py-1.5 text-[10px] font-semibold text-white"
                                         >
                                             <span className="absolute inset-0 bg-gradient-to-r from-[#d11b24] via-[#b3181f] to-[#7f0f15] transition-all duration-500 group-hover:scale-105"></span>
@@ -224,8 +224,7 @@ const App = () => {
                                     <p className="text-[10px] md:text-[11px] tracking-[0.18em] md:tracking-[0.28em] uppercase text-red-600 font-bold mb-2 md:mb-3">
                                         Kaderisasi Pemimpin                                </p>
                                     <h2 className="text-lg sm:text-xl md:text-3xl font-bold text-white leading-tight">
-                                        Membangun Indonesia yang Sejahtera.                                 <img
-                                        />
+                                        Membangun Indonesia yang Sejahtera.
                                     </h2>
                                     <p className="mt-2 md:mt-3 text-sm sm:text-base md:text-base text-white leading-relaxed">
                                         Melalui semangat kebersamaan dan partisipasi masyarakat, kepemimpinan dapat menghadirkan
@@ -238,7 +237,6 @@ const App = () => {
                                         <video
                                             className="w-full md:w-[1980px] max-w-full aspect-[16/9] object-cover rounded-xl shadow-[10px_12px_0_rgba(179,24,31,0.9)]"
                                             src="/videos/home video.mp4"
-                                            poster="/images/-"
                                             autoPlay
                                             muted
                                             loop
@@ -328,7 +326,7 @@ const App = () => {
                     </div>
                 </section>
 
-            </main >
+            </main>
 
             {/* Footer */}
             < Footer />
