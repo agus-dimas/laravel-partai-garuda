@@ -158,10 +158,23 @@ const STURKTUR_STYLES = `
 `;
 
 function StrukturPage() {
+    const [membersList, setMembersList] = useState(boardMembers);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState('next');
     const [photoMotionSeed, setPhotoMotionSeed] = useState(0);
-    const totalMembers = boardMembers.length;
+
+    useEffect(() => {
+        fetch('/api/settings')
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.struktur_board_members && data.struktur_board_members.length > 0) {
+                    setMembersList(data.struktur_board_members);
+                }
+            })
+            .catch(err => console.error('Fetch settings error:', err));
+    }, []);
+
+    const totalMembers = membersList.length;
 
     // OPTIMASI: Hanya preload aset utama & foto tetangga (Next & Prev)
     useEffect(() => {
@@ -173,29 +186,32 @@ function StrukturPage() {
     }, []);
 
     useEffect(() => {
+        if (!totalMembers) return;
         const nextIdx = (currentIndex + 1) % totalMembers;
         const prevIdx = (currentIndex - 1 + totalMembers) % totalMembers;
 
-        [boardMembers[nextIdx].photo, boardMembers[prevIdx].photo].forEach(src => {
+        [membersList[nextIdx]?.photo, membersList[prevIdx]?.photo].forEach(src => {
             if (src) {
                 const img = new Image();
                 img.src = src;
             }
         });
-    }, [currentIndex, totalMembers]);
+    }, [currentIndex, totalMembers, membersList]);
 
     const goNext = () => {
+        if (!totalMembers) return;
         setDirection('next');
         setPhotoMotionSeed((prev) => prev + 1);
         setCurrentIndex((prev) => (prev + 1) % totalMembers);
     };
     const goPrev = () => {
+        if (!totalMembers) return;
         setDirection('prev');
         setPhotoMotionSeed((prev) => prev + 1);
         setCurrentIndex((prev) => (prev - 1 + totalMembers) % totalMembers);
     };
 
-    const activeMember = boardMembers[currentIndex];
+    const activeMember = membersList[currentIndex] || membersList[0] || { role: '', name: '', bio: '', photo: fallbackPhoto };
 
     return (
         <div className="min-h-screen pt-16 text-zinc-900 bg-transparent md:bg-white">
