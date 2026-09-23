@@ -9,11 +9,11 @@
     <p class="mt-2 text-sm text-white/80">Menu Navigasi</p>
 
     <nav class="mt-8 space-y-2 text-sm">
-        <a href="{{ route('dashboard') }}" 
+        <a href="{{ route('dashboard') }}"
             class="block rounded-lg px-3 py-2 {{ request()->routeIs('dashboard') ? 'bg-white/15 text-white' : 'text-white/80 hover:bg-white/10' }}">
             Dashboard
         </a>
-        
+
         @if(in_array(auth()->user()->role, ['admin', 'super_admin'], true))
             <a href="{{ route('news.create') }}"
                 class="block rounded-lg px-3 py-2 {{ request()->routeIs('news.create') ? 'bg-white/15 text-white' : 'text-white/80 hover:bg-white/10' }}">
@@ -29,12 +29,41 @@
                 Input Konsultasi
             </a>
         @endif
-        
+
         @if(auth()->user()->role === 'super_admin')
             <a href="{{ route('dashboard.users.index') }}"
                 class="block rounded-lg px-3 py-2 {{ request()->routeIs('dashboard.users.index') ? 'bg-white/15 text-white' : 'text-white/80 hover:bg-white/10' }}">
                 Manajemen User
             </a>
+
+            <div x-data="{ open: {{ request()->routeIs('dashboard.customize.*') ? 'true' : 'false' }} }">
+                <button type="button" @click="open = !open"
+                    class="w-full flex items-center justify-between rounded-lg px-3 py-2 {{ request()->routeIs('dashboard.customize.*') ? 'bg-white/15 text-white' : 'text-white/80 hover:bg-white/10' }} transition-colors">
+                    <span>Customize</span>
+                    <svg class="w-4 h-4 transform transition-transform duration-200" :class="{ 'rotate-180': open }"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open" x-transition class="mt-1 pl-3 space-y-1">
+                    <a href="{{ route('dashboard.customize.index') }}"
+                        class="block rounded-lg px-3 py-1.5 text-xs {{ request()->routeIs('dashboard.customize.index') ? 'bg-white/20 text-white font-semibold' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+                        Home
+                    </a>
+                    <a href="{{ route('dashboard.customize.about') }}"
+                        class="block rounded-lg px-3 py-1.5 text-xs {{ request()->routeIs('dashboard.customize.about') ? 'bg-white/20 text-white font-semibold' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+                        About Us
+                    </a>
+                    <a href="{{ route('dashboard.customize.struktur') }}"
+                        class="block rounded-lg px-3 py-1.5 text-xs {{ request()->routeIs('dashboard.customize.struktur') ? 'bg-white/20 text-white font-semibold' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+                        Struktur
+                    </a>
+                    <a href="{{ route('dashboard.customize.media') }}"
+                        class="block rounded-lg px-3 py-1.5 text-xs {{ request()->routeIs('dashboard.customize.media') ? 'bg-white/20 text-white font-semibold' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+                        Media
+                    </a>
+                </div>
+            </div>
         @endif
     </nav>
 </div>

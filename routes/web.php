@@ -29,6 +29,7 @@ Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
 Route::get('/api/news', [NewsController::class, 'apiIndex']);
 Route::get('/api/news/categories', [NewsController::class, 'apiCategories']);
+Route::get('/api/settings', [App\Http\Controllers\AdminCustomizeController::class, 'apiIndex']);
 
 // =======================
 // ROUTE PUBLIC KONSULTASI
@@ -71,7 +72,7 @@ Route::middleware(['auth'])->group(function () {
     // Hapus berita
     Route::delete('/dashboard/news/{id}', [NewsController::class, 'destroy'])->middleware('admin')->name('news.destroy');
 
-    // Manajemen admin (super admin saja)
+    // Manajemen admin & Customize (super admin saja)
     Route::get('/dashboard/users', [App\Http\Controllers\AdminUserController::class, 'index'])
         ->middleware('super-admin')
         ->name('dashboard.users.index');
@@ -81,6 +82,33 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/dashboard/users/{user}/password', [App\Http\Controllers\AdminUserController::class, 'resetPassword'])
         ->middleware('super-admin')
         ->name('dashboard.users.password');
+    Route::get('/dashboard/customize', [App\Http\Controllers\AdminCustomizeController::class, 'index'])
+        ->middleware('super-admin')
+        ->name('dashboard.customize.index');
+    Route::post('/dashboard/customize', [App\Http\Controllers\AdminCustomizeController::class, 'update'])
+        ->middleware('super-admin')
+        ->name('dashboard.customize.update');
+
+    Route::get('/dashboard/customize/about', [App\Http\Controllers\AdminCustomizeController::class, 'about'])
+        ->middleware('super-admin')
+        ->name('dashboard.customize.about');
+    Route::post('/dashboard/customize/about', [App\Http\Controllers\AdminCustomizeController::class, 'updateAbout'])
+        ->middleware('super-admin')
+        ->name('dashboard.customize.updateAbout');
+
+    Route::get('/dashboard/customize/struktur', [App\Http\Controllers\AdminCustomizeController::class, 'struktur'])
+        ->middleware('super-admin')
+        ->name('dashboard.customize.struktur');
+    Route::post('/dashboard/customize/struktur', [App\Http\Controllers\AdminCustomizeController::class, 'updateStruktur'])
+        ->middleware('super-admin')
+        ->name('dashboard.customize.updateStruktur');
+
+    Route::get('/dashboard/customize/media', [App\Http\Controllers\AdminCustomizeController::class, 'media'])
+        ->middleware('super-admin')
+        ->name('dashboard.customize.media');
+    Route::post('/dashboard/customize/media', [App\Http\Controllers\AdminCustomizeController::class, 'updateMedia'])
+        ->middleware('super-admin')
+        ->name('dashboard.customize.updateMedia');
 
     // Berita Actions (Like & Comment)
     Route::post('/news/{id}/like', [NewsController::class, 'toggleLike'])->name('news.like');

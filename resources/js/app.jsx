@@ -62,6 +62,11 @@ const App = () => {
     const [cards, setCards] = useState([]);
     const [page, setPage] = useState(1);
     const [lastPage, setLastPage] = useState(1);
+    const [settings, setSettings] = useState({
+        home_section_tagline: 'Partai Garuda',
+        home_section_title: 'Gerakan Politik Kebangsaan Untuk Indonesia',
+        home_section_description: 'Partai Garuda hadir sebagai wadah perjuangan politik yang berfokus pada semangat nasionalisme, kerakyatan, dan keadilan sosial. Kami berjuang dan bekerja untuk perubahan Indonesia. Dan setiap kader kami adalah patriot-patriot bangsa yang selalu siap menyingsingkan lengan baju untuk mewujudkan cita-cita para pendiri Bangsa dan Negara Kesatuan Republik Indonesia.',
+    });
 
     const fetchNews = (page = 1) => {
         fetch(`/api/news?page=${page}`)
@@ -82,8 +87,20 @@ const App = () => {
             .catch(err => console.error('Fetch error:', err));
     };
 
+    const fetchSettings = () => {
+        fetch('/api/settings')
+            .then(res => res.json())
+            .then(data => {
+                if (data) {
+                    setSettings(prev => ({ ...prev, ...data }));
+                }
+            })
+            .catch(err => console.error('Fetch settings error:', err));
+    };
+
     useEffect(() => {
         fetchNews();
+        fetchSettings();
     }, []);
 
     return (
@@ -106,16 +123,13 @@ const App = () => {
                     <div className="w-full md:max-w-5xl mx-auto px-3 md:px-6">
                         <div className="rounded-2xl px-6 py-6 md:px-8 md:py-7">
                             <p className="text-[11px] md:text-xs uppercase tracking-[0.25em] text-red-600 font-semibold mb-2">
-                                Partai Garuda
+                                {settings.home_section_tagline || "Partai Garuda"}
                             </p>
                             <h2 className="text-xl md:text-2xl font-bold text-zinc-900 mb-3">
-                                Gerakan Politik Kebangsaan Untuk Indonesia
+                                {settings.home_section_title || "Gerakan Politik Kebangsaan Untuk Indonesia"}
                             </h2>
                             <p className="text-sm md:text-base text-zinc-700 leading-relaxed">
-                                Partai Garuda hadir sebagai wadah perjuangan politik yang berfokus pada semangat
-                                nasionalisme, kerakyatan, dan keadilan sosial. Kami berjuang dan bekerja untuk perubahan Indonesia.
-                                Dan setiap kader kami adalah patriot-patriot bangsa yang selalu siap menyingsingkan lengan baju
-                                untuk mewujudkan cita-cita para pendiri Bangsa dan Negara Kesatuan Republik Indonesia.
+                                {settings.home_section_description || "Partai Garuda hadir sebagai wadah perjuangan politik yang berfokus pada semangat nasionalisme, kerakyatan, dan keadilan sosial. Kami berjuang dan bekerja untuk perubahan Indonesia. Dan setiap kader kami adalah patriot-patriot bangsa yang selalu siap menyingsingkan lengan baju untuk mewujudkan cita-cita para pendiri Bangsa dan Negara Kesatuan Republik Indonesia."}
                             </p>
                         </div>
                     </div>

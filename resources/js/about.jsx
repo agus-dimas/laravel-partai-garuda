@@ -6,6 +6,23 @@ import { Footer } from './components/Footer';
 
 
 function AboutPage() {
+    const [settings, setSettings] = React.useState({
+        about_section_tagline: 'About Us',
+        about_section_title: 'GARDA REPUBLIK INDONESIA',
+        about_section_description: 'Kami hadir sebagai gerakan politik modern yang menghubungkan ide, aksi, dan dampak nyata untuk masyarakat.',
+    });
+
+    React.useEffect(() => {
+        fetch('/api/settings')
+            .then(res => res.json())
+            .then(data => {
+                if (data) {
+                    setSettings(prev => ({ ...prev, ...data }));
+                }
+            })
+            .catch(err => console.error('Fetch settings error:', err));
+    }, []);
+
     return (
         <div className="min-h-screen flex flex-col bg-[#f6f6f5]">
             <main className="flex-grow pt-16 pb-10">
@@ -13,7 +30,7 @@ function AboutPage() {
                     <div className="relative max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-16 grid md:grid-cols-2 gap-8 items-stretch">
                         <div className="flex flex-col justify-start">
                             <div className="inline-flex flex-col items-start">
-                                <p className="pl-[2px] text-[11px] tracking-[0.28em] uppercase text-red-600 font-semibold mb-3 leading-none">About Us</p>
+                                <p className="pl-[2px] text-[11px] tracking-[0.28em] uppercase text-red-600 font-semibold mb-3 leading-none">{settings.about_section_tagline || "About Us"}</p>
                                 <h1 className="text-4xl md:text-6xl font-extrabold leading-[1.02] text-white ">
                                     PARTAI GARUDA
                                 </h1>
@@ -22,11 +39,10 @@ function AboutPage() {
                         <div className="flex items-end">
                             <div className="max-w-xl pl-5 md:pl-8 border-l border-white/30">
                                 <span className="block mb-2 text-red-600 font-semibold tracking-[0.16em] uppercase text-xs md:text-sm">
-                                    GARDA REPUBLIK INDONESIA
+                                    {settings.about_section_title || "GARDA REPUBLIK INDONESIA"}
                                 </span>
                                 <p className="text-zinc-100/95 leading-relaxed text-sm md:text-base">
-                                    Kami hadir sebagai gerakan politik modern yang menghubungkan ide, aksi, dan dampak nyata
-                                    untuk masyarakat.
+                                    {settings.about_section_description || "Kami hadir sebagai gerakan politik modern yang menghubungkan ide, aksi, dan dampak nyata untuk masyarakat."}
                                 </p>
                             </div>
                         </div>

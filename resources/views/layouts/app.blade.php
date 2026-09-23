@@ -19,7 +19,7 @@
 <script src="//unpkg.com/alpinejs" defer></script>
 
 <body class="font-sans antialiased">
-        @if (!request()->is('dashboard', 'dashboard/users', 'dashboard/konsultasi', 'dashboard/news/create'))
+        @if (!request()->is('dashboard*'))
             @include('layouts.navigation')
         @endif
 
