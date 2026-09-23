@@ -32,30 +32,6 @@
                 <form action="{{ route('dashboard.customize.updateStruktur') }}" method="POST" enctype="multipart/form-data" class="mt-6 space-y-6">
                     @csrf
                     
-                    <!-- Section Header Info -->
-                    <div class="rounded-2xl bg-white shadow p-6">
-                        <h2 class="text-lg font-semibold text-zinc-900 mb-4 pb-2 border-b border-zinc-100">Header Halaman Struktur</h2>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-zinc-700 mb-1">Tagline / Sub-Judul</label>
-                                <input type="text" name="struktur_section_tagline"
-                                    value="{{ old('struktur_section_tagline', $settings['struktur_section_tagline']) }}"
-                                    class="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm focus:border-red-500 focus:ring-red-200" />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-zinc-700 mb-1">Judul Section</label>
-                                <input type="text" name="struktur_section_title"
-                                    value="{{ old('struktur_section_title', $settings['struktur_section_title']) }}"
-                                    class="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm focus:border-red-500 focus:ring-red-200" />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-zinc-700 mb-1">Deskripsi Section</label>
-                                <textarea name="struktur_section_description" rows="2"
-                                    class="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm focus:border-red-500 focus:ring-red-200">{{ old('struktur_section_description', $settings['struktur_section_description']) }}</textarea>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Section Board Members -->
                     <div class="rounded-2xl bg-white shadow p-6">
                         <div class="flex items-center justify-between mb-4 pb-2 border-b border-zinc-100">

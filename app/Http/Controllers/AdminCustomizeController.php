@@ -145,37 +145,18 @@ class AdminCustomizeController extends Controller
         $rawMembers = SiteSetting::get('struktur_board_members');
         $boardMembers = $rawMembers ? json_decode($rawMembers, true) : $this->defaultBoardMembers();
 
-        $settings = [
-            'struktur_section_tagline' => SiteSetting::get('struktur_section_tagline', 'Struktur Organisasi'),
-            'struktur_section_title' => SiteSetting::get('struktur_section_title', 'Kepengurusan Partai Garuda'),
-            'struktur_section_description' => SiteSetting::get('struktur_section_description', 'Struktur kepengurusan Partai Garuda dari tingkat pusat hingga daerah yang bekerja secara profesional dan berintegritas.'),
-        ];
-
-        return view('dashboard.customize.struktur', compact('settings', 'boardMembers'));
+        return view('dashboard.customize.struktur', compact('boardMembers'));
     }
 
     public function updateStruktur(Request $request)
     {
         $request->validate([
-            'struktur_section_tagline' => 'nullable|string|max:255',
-            'struktur_section_title' => 'nullable|string|max:255',
-            'struktur_section_description' => 'nullable|string',
             'members' => 'nullable|array',
             'members.*.role' => 'required|string|max:255',
             'members.*.name' => 'required|string|max:255',
             'members.*.bio' => 'nullable|string',
             'members.*.photo' => 'nullable|image|max:5120',
         ]);
-
-        if ($request->filled('struktur_section_tagline')) {
-            SiteSetting::set('struktur_section_tagline', $request->input('struktur_section_tagline'));
-        }
-        if ($request->filled('struktur_section_title')) {
-            SiteSetting::set('struktur_section_title', $request->input('struktur_section_title'));
-        }
-        if ($request->filled('struktur_section_description')) {
-            SiteSetting::set('struktur_section_description', $request->input('struktur_section_description'));
-        }
 
         $inputMembers = $request->input('members', []);
         $updatedMembers = [];
@@ -199,7 +180,7 @@ class AdminCustomizeController extends Controller
 
         SiteSetting::set('struktur_board_members', json_encode($updatedMembers));
 
-        return redirect()->route('dashboard.customize.struktur')->with('success', 'Konten & Data Pengurus Struktur berhasil diperbarui!');
+        return redirect()->route('dashboard.customize.struktur')->with('success', 'Data Pengurus Struktur berhasil diperbarui!');
     }
 
     /**

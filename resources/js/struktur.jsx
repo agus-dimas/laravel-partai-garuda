@@ -214,7 +214,7 @@ function StrukturPage() {
     const activeMember = membersList[currentIndex] || membersList[0] || { role: '', name: '', bio: '', photo: fallbackPhoto };
 
     return (
-        <div className="min-h-screen pt-16 text-zinc-900 bg-transparent md:bg-white">
+        <div className="min-h-screen pt-16 text-zinc-900 bg-transparent md:bg-white overflow-x-hidden">
             <section className="relative w-screen left-1/2 right-1/2 -mx-[50vw] bg-transparent md:bg-white">
                 <div className="relative min-h-[420px] sm:min-h-[520px] md:min-h-[calc(100vh-4rem)] grid grid-cols-1 md:grid-cols-[1.05fr_0.95fr]">
                     <div className="order-2 md:order-1 relative z-10 flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-10 md:py-12 lg:py-16 bg-zinc-950 md:mr-[-12vw] md:pr-[18vw] overflow-hidden"
