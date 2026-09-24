@@ -122,8 +122,18 @@ class NewsController extends Controller
     {
         $query = News::with('user')->latest();
 
+        // Filter berdasarkan kategori (jika dipilih)
         if ($request->filled('category') && $request->category !== 'Semua') {
             $query->where('category', $request->category);
+        }
+
+        // BARU: Filter pencarian publik berdasarkan judul atau konten berita
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('content', 'like', "%{$search}%");
+            });
         }
 
         $news = $query->paginate(4);
@@ -141,6 +151,7 @@ class NewsController extends Controller
 
         return response()->json($news);
     }
+
 
     public function apiCategories()
     {

@@ -26,11 +26,6 @@ const TiltCard = ({ title, description, image, link, author, category }) => {
                 <img src={image || '/placeholder.jpg'} className="w-full h-52 object-cover" alt={title} />
                 <h3 className="mt-3 px-4 pt-3 mb-1 text-lg font-semibold text-gray-800">{title}</h3>
                 <p className="text-sm px-4 text-gray-400">Oleh: {author || 'Anonim'}</p>
-                {/* <div className="px-4 mt-2">
-                    <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                        {category || 'Umum'}
-                    </span>
-                </div> */}
                 <p className="px-4 text-sm text-gray-600 leading-relaxed line-clamp-3 min-h-[4.5rem]">
                     {description}
                 </p>
@@ -53,6 +48,9 @@ const NewsApp = () => {
     const [categories, setCategories] = useState(['Semua']);
     const [selectedCategory, setSelectedCategory] = useState('Semua');
 
+    // BARU: State untuk menyimpan kata kunci pencarian
+    const [searchKeyword, setSearchKeyword] = useState('');
+
     const fetchCategories = () => {
         fetch('/api/news/categories')
             .then(res => res.json())
@@ -62,11 +60,16 @@ const NewsApp = () => {
             .catch(err => console.error('Fetch categories error:', err));
     };
 
-    const fetchNews = (targetPage = 1, category = selectedCategory) => {
+    // BARU: Diperbarui agar mendukung parameter 'keyword'
+    const fetchNews = (targetPage = 1, category = selectedCategory, keyword = searchKeyword) => {
         let url = `/api/news?page=${targetPage}`;
         if (category && category !== 'Semua') {
             url += `&category=${encodeURIComponent(category)}`;
         }
+        if (keyword) {
+            url += `&search=${encodeURIComponent(keyword)}`;
+        }
+
         fetch(url)
             .then((res) => res.json())
             .then((result) => {
@@ -91,11 +94,53 @@ const NewsApp = () => {
         fetchNews();
     }, []);
 
+    // BARU: Fungsi ketika form pencarian disubmit
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        fetchNews(1, selectedCategory, searchKeyword);
+    };
+
+    // BARU: Fungsi untuk mereset kata kunci pencarian
+    const handleResetSearch = () => {
+        setSearchKeyword('');
+        fetchNews(1, selectedCategory, '');
+    };
+
     return (
         <div className="min-h-screen flex flex-col bg-gray-100">
             <main className="flex-grow pt-2 md:pt-24 px-2 md:px-8 pb-8">
                 <BannerSlider />
-                <h1 className="text-3xl font-bold text-center mb-6">Berita Garuda</h1>
+                <h1 className="text-3xl font-bold text-center mb-4">Berita Garuda</h1>
+
+
+                <div className="max-w-md mx-auto mb-6 px-2">
+                    <form onSubmit={handleSearchSubmit} className="flex gap-2">
+                        <div className="relative flex-grow">
+                            <input
+                                type="text"
+                                placeholder="Cari berita..."
+                                value={searchKeyword}
+                                onChange={(e) => setSearchKeyword(e.target.value)}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#b3181f] focus:border-transparent text-sm bg-white"
+                            />
+                            {searchKeyword && (
+                                <button
+                                    type="button"
+                                    onClick={handleResetSearch}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xs font-semibold"
+                                >
+                                    Reset
+                                </button>
+                            )}
+                        </div>
+                        <button
+                            type="submit"
+                            className="px-5 py-2 bg-[#b3181f] text-white font-semibold text-sm rounded-lg shadow hover:bg-[#99141b] transition-colors"
+                        >
+                            Cari
+                        </button>
+                    </form>
+                </div>
 
                 <div className="flex flex-wrap justify-center gap-2 mb-10">
                     {categories.map((cat, idx) => (
@@ -103,7 +148,7 @@ const NewsApp = () => {
                             key={idx}
                             onClick={() => {
                                 setSelectedCategory(cat);
-                                fetchNews(1, cat);
+                                fetchNews(1, cat, searchKeyword);
                             }}
                             className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-colors ${selectedCategory === cat
                                 ? 'bg-[#b3181f] text-white shadow-md'
@@ -115,15 +160,22 @@ const NewsApp = () => {
                     ))}
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {cards.map((card, i) => (
-                        <TiltCard key={i} {...card} />
-                    ))}
-                </div>
+                {/* Grid Berita */}
+                {cards.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {cards.map((card, i) => (
+                            <TiltCard key={i} {...card} />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="text-center text-gray-500 py-12 bg-white rounded-xl shadow-inner max-w-xl mx-auto">
+                        Berita tidak ditemukan dengan kata kunci tersebut.
+                    </div>
+                )}
 
                 <div className="flex justify-center mt-6 space-x-2">
                     <button
-                        onClick={() => fetchNews(page - 1)}
+                        onClick={() => fetchNews(page - 1, selectedCategory, searchKeyword)}
                         disabled={page <= 1}
                         className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
                     >
@@ -131,7 +183,7 @@ const NewsApp = () => {
                     </button>
                     <span className="px-4 py-2">{page} / {lastPage}</span>
                     <button
-                        onClick={() => fetchNews(page + 1)}
+                        onClick={() => fetchNews(page + 1, selectedCategory, searchKeyword)}
                         disabled={page >= lastPage}
                         className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
                     >
