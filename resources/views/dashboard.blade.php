@@ -48,9 +48,29 @@
 
                 @if($isAdmin)
                     <div class="mt-8">
-                        <h2 class="text-lg font-semibold text-zinc-900 mb-4">Berita</h2>
+                        <!-- Judul dan Form Pencarian Khusus Admin / Super Admin -->
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+                            <h2 class="text-lg font-semibold text-zinc-900">Berita</h2>
+
+                            <form action="{{ url()->current() }}" method="GET" class="flex gap-2 w-full sm:max-w-xs">
+                                <input type="text" name="search" value="{{ request('search') }}"
+                                    placeholder="Cari judul berita..."
+                                    class="w-full rounded-lg border border-zinc-300 bg-white px-3 py-1.5 text-sm text-zinc-900 shadow-sm focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500">
+                                <button type="submit"
+                                    class="rounded-lg bg-zinc-900 px-3 py-1.5 text-sm font-semibold text-white shadow hover:bg-zinc-800">
+                                    Cari
+                                </button>
+                                @if(request('search'))
+                                    <a href="{{ url()->current() }}"
+                                        class="rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-sm font-semibold text-zinc-700 hover:bg-zinc-50 flex items-center">
+                                        Reset
+                                    </a>
+                                @endif
+                            </form>
+                        </div>
+
                         <div class="space-y-4">
-                            @foreach($news as $item)
+                            @forelse($news as $item)
                                 <div class="rounded-2xl bg-white p-5 shadow flex flex-col gap-4">
                                     <div>
                                         <div class="flex items-center gap-2">
@@ -79,10 +99,14 @@
                                         </form>
                                     </div>
                                 </div>
-                            @endforeach
+                            @empty
+                                <div class="rounded-2xl bg-white p-6 text-zinc-500 text-center">Berita tidak ditemukan.</div>
+                            @endforelse
                         </div>
+
+                        <!-- Pagination Menjaga Query String Search -->
                         <div class="mt-6">
-                            {{ $news->links() }}
+                            {{ $news->appends(['search' => request('search')])->links() }}
                         </div>
                     </div>
                 @else
