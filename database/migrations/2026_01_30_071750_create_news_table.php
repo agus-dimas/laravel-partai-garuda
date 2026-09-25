@@ -9,9 +9,9 @@ return new class extends Migration {
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
-            $table->string('title');      // wajib
-            $table->text('content');      // wajib
-            $table->string('image')->nullable(); // optional
+            $table->string('title');
+            $table->text('content');
+            $table->string('image')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

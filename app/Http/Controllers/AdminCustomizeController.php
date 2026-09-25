@@ -117,10 +117,18 @@ class AdminCustomizeController extends Controller
             'about_section_tagline' => SiteSetting::get('about_section_tagline', 'About Us'),
             'about_section_title' => SiteSetting::get('about_section_title', 'Gerakan Politik Kebangsaan Untuk Indonesia'),
             'about_section_description' => SiteSetting::get('about_section_description', 'Partai Garuda hadir sebagai wadah perjuangan politik yang berfokus pada semangat nasionalisme, kerakyatan, dan keadilan sosial. Kami berjuang dan bekerja untuk perubahan Indonesia.'),
+            'visi_section_tagline' => SiteSetting::get('visi_section_tagline', 'Arah perjuangan kami dibangun di atas konstitusi, nilai kebangsaan, dan komitmen untuk menghadirkan dampak yang bisa dirasakan langsung oleh rakyat.'),
+            'misi1_section_tagline' => SiteSetting::get('misi1_section_tagline', 'Terwujudnya cita-cita nasional bangsa Indonesia sebagaimana dimaksud dalam PembukaanUndang-Undang Dasar Negara Republik Indonesia Tahun 1945.'),
+            'misi2_section_tagline' => SiteSetting::get('misi2_section_tagline', 'Terwujudnya masyarakat demokratis yang adil dan sejahtera serta berkeyakinan pada Tuhan Yang Maha Esa, mencintai tanah air dan bangsa dalam bingkai Negara Kesatuan Republik Indonesia.'),
+            'misi3_section_tagline' => SiteSetting::get('misi3_section_tagline', 'Mewujudkan masyarakat kedaulatan rakyat dalam berdemokrasi, yang menjunjung tinggi nilai-nilai kebenaran dan hukum yang berlaku.'),
+            'misi4_section_tagline' => SiteSetting::get('misi4_section_tagline', 'Mewujudkan ekonomi kerakyatan yang berkeadilan.
+
+'),
         ];
 
         return view('dashboard.customize.about', compact('settings'));
     }
+
 
     public function updateAbout(Request $request)
     {
@@ -128,11 +136,21 @@ class AdminCustomizeController extends Controller
             'about_section_tagline' => 'required|string|max:255',
             'about_section_title' => 'required|string|max:255',
             'about_section_description' => 'required|string',
+            'visi_section_tagline' => 'required|string|max:255',
+            'misi1_section_tagline' => 'required|string|max:255',
+            'misi2_section_tagline' => 'required|string|max:255',
+            'misi3_section_tagline' => 'required|string|max:255',
+            'misi4_section_tagline' => 'required|string|max:255',
         ]);
 
         SiteSetting::set('about_section_tagline', $request->input('about_section_tagline'));
         SiteSetting::set('about_section_title', $request->input('about_section_title'));
         SiteSetting::set('about_section_description', $request->input('about_section_description'));
+        SiteSetting::set('visi_section_tagline', $request->input('visi_section_tagline'));
+        SiteSetting::set('misi1_section_tagline', $request->input('misi1_section_tagline'));
+        SiteSetting::set('misi2_section_tagline', $request->input('misi2_section_tagline'));
+        SiteSetting::set('misi3_section_tagline', $request->input('misi3_section_tagline'));
+        SiteSetting::set('misi4_section_tagline', $request->input('misi4_section_tagline'));
 
         return redirect()->route('dashboard.customize.about')->with('success', 'Konten About Us berhasil diperbarui!');
     }
@@ -225,11 +243,18 @@ class AdminCustomizeController extends Controller
             'home_section_tagline' => SiteSetting::get('home_section_tagline', 'Partai Garuda'),
             'home_section_title' => SiteSetting::get('home_section_title', 'Gerakan Politik Kebangsaan Untuk Indonesia'),
             'home_section_description' => SiteSetting::get('home_section_description', 'Partai Garuda hadir sebagai wadah perjuangan politik yang berfokus pada semangat nasionalisme, kerakyatan, dan keadilan sosial. Kami berjuang dan bekerja untuk perubahan Indonesia. Dan setiap kader kami adalah patriot-patriot bangsa yang selalu siap menyingsingkan lengan baju untuk mewujudkan cita-cita para pendiri Bangsa dan Negara Kesatuan Republik Indonesia.'),
-            
+
             // About Us
             'about_section_tagline' => SiteSetting::get('about_section_tagline', 'About Us'),
             'about_section_title' => SiteSetting::get('about_section_title', 'Gerakan Politik Kebangsaan Untuk Indonesia'),
             'about_section_description' => SiteSetting::get('about_section_description', 'Partai Garuda hadir sebagai wadah perjuangan politik yang berfokus pada semangat nasionalisme, kerakyatan, dan keadilan sosial. Kami berjuang dan bekerja untuk perubahan Indonesia.'),
+            'visi_section_tagline' => SiteSetting::get('visi_section_tagline', 'Arah perjuangan kami dibangun di atas konstitusi, nilai kebangsaan, dan komitmen untuk menghadirkan dampak yang bisa dirasakan langsung oleh rakyat.'),
+            'misi1_section_tagline' => SiteSetting::get('misi1_section_tagline', 'Terwujudnya cita-cita nasional bangsa Indonesia sebagaimana dimaksud dalam PembukaanUndang-Undang Dasar Negara Republik Indonesia Tahun 1945.'),
+            'misi2_section_tagline' => SiteSetting::get('misi2_section_tagline', 'Terwujudnya masyarakat demokratis yang adil dan sejahtera serta berkeyakinan pada Tuhan Yang Maha Esa, mencintai tanah air dan bangsa dalam bingkai Negara Kesatuan Republik Indonesia.'),
+            'misi3_section_tagline' => SiteSetting::get('misi3_section_tagline', 'Mewujudkan masyarakat kedaulatan rakyat dalam berdemokrasi, yang menjunjung tinggi nilai-nilai kebenaran dan hukum yang berlaku.'),
+            'misi4_section_tagline' => SiteSetting::get('misi4_section_tagline', 'Mewujudkan ekonomi kerakyatan yang berkeadilan.'),
+
+
 
             // Struktur
             'struktur_section_tagline' => SiteSetting::get('struktur_section_tagline', 'Struktur Organisasi'),

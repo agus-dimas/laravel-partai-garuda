@@ -10,6 +10,11 @@ function AboutPage() {
         about_section_tagline: 'About Us',
         about_section_title: 'GARDA REPUBLIK INDONESIA',
         about_section_description: 'Kami hadir sebagai gerakan politik modern yang menghubungkan ide, aksi, dan dampak nyata untuk masyarakat.',
+        visi_section_tagline: 'Arah perjuangan kami dibangun di atas konstitusi, nilai kebangsaan, dan komitmen untuk menghadirkan dampak yang bisa dirasakan langsung oleh rakyat.',
+        misi1_section_tagline: 'Terwujudnya cita-cita nasional bangsa Indonesia sebagaimana dimaksud dalam PembukaanUndang-Undang Dasar Negara Republik Indonesia Tahun 1945.',
+        misi2_section_tagline: 'Terwujudnya masyarakat demokratis yang adil dan sejahtera serta berkeyakinan pada Tuhan Yang Maha Esa, mencintai tanah air dan bangsa dalam bingkai Negara Kesatuan Republik Indonesia.',
+        misi3_section_tagline: 'Mewujudkan masyarakat kedaulatan rakyat dalam berdemokrasi, yang menjunjung tinggi nilai-nilai kebenaran dan hukum yang berlaku.',
+        misi4_section_tagline: 'Mewujudkan ekonomi kerakyatan yang berkeadilan.',
     });
 
     React.useEffect(() => {
@@ -81,8 +86,7 @@ function AboutPage() {
                             </p>
                             <h2 className="text-2xl md:text-3xl font-bold text-zinc-900">Terwujudnya Cita-cita Perubahan Indonesia.</h2>
                             <p className="mt-3 text-zinc-600 leading-relaxed border-l-2 border-red-400 pl-4">
-                                Arah perjuangan kami dibangun di atas konstitusi, nilai kebangsaan, dan komitmen
-                                untuk menghadirkan dampak yang bisa dirasakan langsung oleh rakyat.
+                                {settings.visi_section_tagline || "Arah perjuangan kami dibangun di atas konstitusi, nilai kebangsaan, dan komitmen untuk menghadirkan dampak yang bisa dirasakan langsung oleh rakyat."}
                             </p>
 
                             <div className="mt-6 space-y-3">
@@ -90,8 +94,7 @@ function AboutPage() {
                                     <div className="flex items-start gap-3">
                                         <span className="mt-0.5 inline-flex w-7 h-7 items-center justify-center rounded-full bg-red-100 text-red-700 text-sm font-bold shrink-0">1</span>
                                         <p className="text-zinc-700 leading-relaxed">
-                                            Terwujudnya cita-cita nasional bangsa Indonesia sebagaimana dimaksud dalam Pembukaan
-                                            Undang-Undang Dasar Negara Republik Indonesia Tahun 1945.
+                                            {settings.misi1_section_tagline || "Terwujudnya cita-cita nasional bangsa Indonesia sebagaimana dimaksud dalam PembukaanUndang-Undang Dasar Negara Republik Indonesia Tahun 1945."}
                                         </p>
                                     </div>
                                 </div>
@@ -99,9 +102,8 @@ function AboutPage() {
                                     <div className="flex items-start gap-3">
                                         <span className="mt-0.5 inline-flex w-7 h-7 items-center justify-center rounded-full bg-red-100 text-red-700 text-sm font-bold shrink-0">2</span>
                                         <p className="text-zinc-700 leading-relaxed">
-                                            Terwujudnya masyarakat demokratis yang adil dan sejahtera serta berkeyakinan pada
-                                            Tuhan Yang Maha Esa, mencintai tanah air dan bangsa dalam bingkai Negara Kesatuan
-                                            Republik Indonesia.
+                                            {settings.misi2_section_tagline || "Terwujudnya masyarakat demokratis yang adil dan sejahtera serta berkeyakinan pada Tuhan Yang Maha Esa, mencintai tanah air dan bangsa dalam bingkai Negara Kesatuan Republik Indonesia."}
+
                                         </p>
                                     </div>
                                 </div>
@@ -109,8 +111,8 @@ function AboutPage() {
                                     <div className="flex items-start gap-3">
                                         <span className="mt-0.5 inline-flex w-7 h-7 items-center justify-center rounded-full bg-red-100 text-red-700 text-sm font-bold shrink-0">3</span>
                                         <p className="text-zinc-700 leading-relaxed">
-                                            Mewujudkan masyarakat kedaulatan rakyat dalam berdemokrasi, yang menjunjung tinggi
-                                            nilai-nilai kebenaran dan hukum yang berlaku.
+                                            {settings.misi3_section_tagline || "Mewujudkan masyarakat kedaulatan rakyat dalam berdemokrasi, yang menjunjung tinggi nilai-nilai kebenaran dan hukum yang berlaku."}
+
                                         </p>
                                     </div>
                                 </div>
@@ -118,7 +120,7 @@ function AboutPage() {
                                     <div className="flex items-start gap-3">
                                         <span className="mt-0.5 inline-flex w-7 h-7 items-center justify-center rounded-full bg-red-100 text-red-700 text-sm font-bold shrink-0">4</span>
                                         <p className="text-zinc-700 leading-relaxed">
-                                            Mewujudkan ekonomi kerakyatan yang berkeadilan.
+                                            {settings.misi4_section_tagline || "Mewujudkan ekonomi kerakyatan yang berkeadilan."}
                                         </p>
                                     </div>
                                 </div>
